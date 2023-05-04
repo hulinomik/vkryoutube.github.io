@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Аналитика YouTube канала</title>
+	<style>
+		table {
+			border-collapse: collapse;
+			margin: 20px;
+		}
+		th, td {
+			padding: 10px;
+			text-align: left;
+			border-bottom: 1px solid #ddd;
+		}
+	</style>
+</head>
+<body>
+	<h1>Аналитика YouTube канала</h1>
+	<p>Введите ссылку на YouTube канал:</p>
+	<input type="text" id="channelLink">
+	<button onclick="getChannelData()">Получить данные</button>
+	<table id="channelData">
+		<tr>
+			<th>Показатель</th>
+			<th>30 дней</th>
+			<th>Ежемесячный доход ($)</th>
+			<th>Годовой доход ($)</th>
+		</tr>
+		<tr>
+			<td>Подписчики</td>
+			<td id="subscribers30"></td>
+			<td id="monthlyEarnings"></td>
+			<td id="yearlyEarnings"></td>
+		</tr>
+		<tr>
+			<td>Просмотры</td>
+			<td id="views30"></td>
+			<td></td>
+			<td></td>
+		</tr>
+	</table>
+	<script>
+		function getChannelData() {
+			const channelLink = document.getElementById("channelLink").value;
+			const apiKey = "AIzaSyC1RPe14snyAOC7q-0O36KodyWw8i1A8X0"; // Замените YOUR_API_KEY на свой API-ключ
+			const apiUrl = `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${getChannelId(channelLink)}&key=${apiKey}`;
+			fetch(apiUrl)
+				.then(response => response.json())
+				.then(data => {
+					const subscribers = parseInt(data.items[0].statistics.subscriberCount);
+					const views = parseInt(data.items[0].statistics.viewCount);
+					const monthlyEarnings = calculateMonthlyEarnings(subscribers);
+					const yearlyEarnings = monthlyEarnings * 12;
+					document.getElementById("subscribers30").innerHTML = numberWithCommas(calculateSubscribers30(subscribers, data.items[0].statistics.subscriberCountHistory));
+					document.getElementById("views30").innerHTML = numberWithCommas(data.items[0].statistics.viewCount - data.items[0].statistics.viewsLast30Days);
+					document.getElementById("monthlyEarnings").innerHTML = numberWithCommas(monthlyEarnings);
+					document.getElementById("yearlyEarnings").innerHTML = numberWithCommas(yearlyEarnings);
+				})
+				.catch(error => console.log(error));
+		}
+
+		function getChannelId(channelLink) {
+			const regex = /channel\/(.{24})/;
+			const result = regex.exec(channelLink);
+			if (result) {
+				return result[1];
+			} else {
+				return channelLink;
+			}
+		}
+
+function calculateSubscribers30(totalSubscribers, subscriberCountHistory) {
+			const last30Days = subscriberCountHistory.slice(-30).map(x => parseInt(x));
+			const previous30Days = subscriberCountHistory.slice(-60, -30).map(x => parseInt(x));
+			const subscribers30DaysAgo = previous30Days[0];
+			const subscribersToday = totalSubscribers;
+			const subscribersGained = subscribersToday - subscribers30DaysAgo;
+			return subscribersGained;
+		}
+
+		function calculateMonthlyEarnings(subscribers) {
+			const cpm = 0.5; // Средний CPM на YouTube составляет около $0.5
+			const viewsPerMonth = subscribers * 30;
+			const earnings = viewsPerMonth * cpm / 1000;
+			return earnings.toFixed(2);
+		}
+
+		function numberWithCommas(x) {
+			return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		}
+	</script>
+</body>
+</html>
