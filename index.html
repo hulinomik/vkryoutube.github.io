@@ -42,6 +42,9 @@
 	</table>
 	<script>
         const apiKey = "AIzaSyC1RPe14snyAOC7q-0O36KodyWw8i1A8X0";
+		const subscriberCountHistory = data.items[0].statistics.subscriberCountHistory;
+		const subscribers30 = subscriberCountHistory ? calculateSubscribers30(subscribers, subscriberCountHistory) : 0;
+		document.getElementById("subscribers30").innerHTML = numberWithCommas(subscribers30);
 
 		function getChannelData() {
 			const channelLink = document.getElementById("channelLink").value;
