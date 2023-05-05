@@ -28,7 +28,7 @@
 			<th>Годовой доход ($)</th>
 		</tr>
 		<tr>
-			<td>Подписчикии</td>
+			<td>Подписчики</td>
 			<td id="subscribers30"></td>
 			<td id="monthlyEarnings"></td>
 			<td id="yearlyEarnings"></td>
@@ -41,9 +41,12 @@
 		</tr>
 	</table>
 	<script>
+        require('dotenv').config()
+        const apiKey = process.env.API_KEY
+
 		function getChannelData() {
 			const channelLink = document.getElementById("channelLink").value;
-			const apiKey = "AIzaSyC1RPe14snyAOC7q-0O36KodyWw8i1A8X0"; // Замените YOUR_API_KEY на свой API-ключ
+			const apiKey = "apiKey"; // Замените YOUR_API_KEY на свой API-ключ
 			const apiUrl = `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${getChannelId(channelLink)}&key=${apiKey}`;
 			fetch(apiUrl)
 				.then(response => response.json())
