@@ -49,7 +49,7 @@
 		function getChannelData() {
 			const channelLink = document.getElementById("channelLink").value;
 			const apiKey = "apiKey"; // Замените YOUR_API_KEY на свой API-ключ
-			const apiUrl = `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${getChannelId(channelLink)}&key=${apiKey}`;
+			const apiUrl = `'https://www.googleapis.com/youtube/v3/channels?part=statistics&id=' + encodeURIComponent(channelID) + '&key=' + apiKey`;
 			fetch(apiUrl)
 					.then(response => response.json())
 					.then(data => {
