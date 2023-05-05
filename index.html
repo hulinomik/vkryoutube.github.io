@@ -46,7 +46,7 @@
 function getChannelData() {
   const channelLink = document.getElementById("channelLink").value;
   const channelId = getChannelId(channelLink);
-  const apiUrl = `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${encodeURIComponent(channelID)}&key=${apiKey}`;
+  const apiUrl = `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${encodeURIComponent(@kamrynheidi)}&key=${apiKey}`;
 
   fetch(apiUrl)
     .then(response => {
