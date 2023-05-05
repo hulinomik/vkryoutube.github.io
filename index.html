@@ -42,9 +42,29 @@
 	</table>
 	<script>
         const apiKey = "AIzaSyCxtRiK3z_npiSb8OWkNEdgIqIbZbVQraA";
-		const subscriberCountHistory = data.items[0].statistics.subscriberCountHistory;
-		const subscribers30 = subscriberCountHistory ? calculateSubscribers30(subscribers, subscriberCountHistory) : 0;
-		document.getElementById("subscribers30").innerHTML = numberWithCommas(subscribers30);
+		
+		function getChannelData() {
+		var channelID = "ваш_ID_канала";
+		var apiKey = "ваш_ключ_API";
+		var url = "https://www.googleapis.com/youtube/v3/channels?part=statistics&id=" + encodeURIComponent(channelID) + "&key=" + apiKey;
+		
+		fetch(url)
+			.then(response => {
+			if (!response.ok) {
+				throw new Error("Ошибка HTTP " + response.status);
+			}
+			return response.json();
+			})
+			.then(data => {
+			console.log(data);
+			var subscriberCount = data.items[0].statistics.subscriberCount;
+			document.getElementById("subscriber-count").innerHTML = subscriberCount;
+			})
+			.catch(error => {
+			console.error("Ошибка получения данных канала: ", error);
+			});
+		}
+
 
 		function getChannelData() {
 			const channelLink = document.getElementById("channelLink").value;
