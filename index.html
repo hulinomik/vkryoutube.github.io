@@ -43,68 +43,67 @@
 	<script>
         const apiKey = "AIzaSyCxtRiK3z_npiSb8OWkNEdgIqIbZbVQraA";
 
-function getChannelData() {
-  const channelLink = document.getElementById("channelLink").value;
-  const channelId = getChannelId(channelLink);
-  const apiUrl = `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${encodeURIComponent(channelID)}&key=${apiKey}`;
+		function getChannelData() {
+			const channelLink = document.getElementById("channelLink").value;
+			const channelId = getChannelId(channelLink);
+			const apiUrl = `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${encodeURIComponent(channelId)}&key=${apiKey}`;
 
-  fetch(apiUrl)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error("Ошибка HTTP " + response.status);
-      }
-      return response.json();
-    })
-    .then(data => {
-      const subscribers = parseInt(data.items[0].statistics.subscriberCount);
-      const views = parseInt(data.items[0].statistics.viewCount);
-      const subscriberCountHistory = data.items[0].statistics.subscriberCountHistory;
-      const subscribers30 = calculateSubscribers30(subscribers, subscriberCountHistory);
-      const views30 = views - data.items[0].statistics.viewsLast30Days;
-      const monthlyEarnings = calculateMonthlyEarnings(subscribers);
-      const yearlyEarnings = monthlyEarnings * 12;
+			fetch(apiUrl)
+				.then(response => {
+				if (!response.ok) {
+					throw new Error("Ошибка HTTP " + response.status);
+				}
+				return response.json();
+				})
+				.then(data => {
+				const subscribers = parseInt(data.items[0].statistics.subscriberCount);
+				const views = parseInt(data.items[0].statistics.viewCount);
+				const subscriberCountHistory = data.items[0].statistics.subscriberCountHistory;
+				const subscribers30 = calculateSubscribers30(subscribers, subscriberCountHistory);
+				const views30 = views - data.items[0].statistics.viewsLast30Days;
+				const monthlyEarnings = calculateMonthlyEarnings(subscribers);
+				const yearlyEarnings = monthlyEarnings * 12;
 
-      document.getElementById("subscriber-count").innerHTML = numberWithCommas(subscribers);
-      document.getElementById("subscribers30").innerHTML = numberWithCommas(subscribers30);
-      document.getElementById("views30").innerHTML = numberWithCommas(views30);
-      document.getElementById("monthlyEarnings").innerHTML = numberWithCommas(monthlyEarnings);
-      document.getElementById("yearlyEarnings").innerHTML = numberWithCommas(yearlyEarnings);
-    })
-    .catch(error => {
-      console.error("Ошибка получения данных канала: ", error);
-    });
-}
+				document.getElementById("subscriber-count").innerHTML = numberWithCommas(subscribers);
+				document.getElementById("subscribers30").innerHTML = numberWithCommas(subscribers30);
+				document.getElementById("views30").innerHTML = numberWithCommas(views30);
+				document.getElementById("monthlyEarnings").innerHTML = numberWithCommas(monthlyEarnings);
+				document.getElementById("yearlyEarnings").innerHTML = numberWithCommas(yearlyEarnings);
+				})
+				.catch(error => {
+				console.error("Ошибка получения данных канала: ", error);
+				});
+			}
 
-function getChannelId(channelLink) {
-  const regex = /channel\/(.{24})/;
-  const result = regex.exec(channelLink);
-  if (result) {
-    return result[1];
-  } else {
-    return channelLink;
-  }
-}
+			function getChannelId(channelLink) {
+			const regex = /channel\/(.{24})/;
+			const result = regex.exec(channelLink);
+			if (result) {
+				return result[1];
+			} else {
+				return channelLink;
+			}
+			}
 
-function calculateSubscribers30(totalSubscribers, subscriberCountHistory) {
-  const last30Days = subscriberCountHistory.slice(-30).map(x => parseInt(x));
-  const previous30Days = subscriberCountHistory.slice(-60, -30).map(x => parseInt(x));
-  const subscribers30DaysAgo = previous30Days[0];
-  const subscribersToday = totalSubscribers;
-  const subscribersGained = subscribersToday - subscribers30DaysAgo;
-  return subscribersGained;
-}
+			function calculateSubscribers30(totalSubscribers, subscriberCountHistory) {
+			const last30Days = subscriberCountHistory.slice(-30).map(x => parseInt(x));
+			const previous30Days = subscriberCountHistory.slice(-60, -30).map(x => parseInt(x));
+			const subscribers30DaysAgo = previous30Days[0];
+			const subscribersToday = totalSubscribers;
+			const subscribersGained = subscribersToday - subscribers30DaysAgo;
+			return subscribersGained;
+			}
 
-function calculateMonthlyEarnings(subscribers) {
-  const cpm = 0.5; // Средний CPM на YouTube составляет около $0.5
-  const viewsPerMonth = subscribers * 30;
-  const earnings = viewsPerMonth * cpm / 1000;
-  return earnings.toFixed(2);
-}
+			function calculateMonthlyEarnings(subscribers) {
+			const cpm = 0.5; // Средний CPM на YouTube составляет около $0.5
+			const viewsPerMonth = subscribers * 30;
+			const earnings = viewsPerMonth * cpm / 1000;
+			return earnings.toFixed(2);
+			}
 
-function numberWithCommas(x) {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
-
+			function numberWithCommas(x) {
+			return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+			}
 	</script>
 </body>
 </html>
