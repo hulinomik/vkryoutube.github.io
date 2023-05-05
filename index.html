@@ -48,8 +48,8 @@
 			const apiKey = "apiKey"; // Замените YOUR_API_KEY на свой API-ключ
 			const apiUrl = `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${getChannelId(channelLink)}&key=${apiKey}`;
 			fetch(apiUrl)
-				.then(response => response.json())
-				.then(data => {
+					.then(response => response.json())
+					.then(data => {
 					if (data.items[0].statistics.subscriberCountHistory.length === 0) {
 					return 0;
 					}	
