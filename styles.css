@@ -1,0 +1,40 @@
+body {
+    font-family: Arial, sans-serif;
+  }
+  
+  h1 {
+    text-align: center;
+  }
+  
+  div {
+    margin-bottom: 10px;
+  }
+  
+  label {
+    display: inline-block;
+    width: 200px;
+  }
+  
+  input[type="number"] {
+    width: 100px;
+  }
+  
+  select {
+    width: 150px;
+  }
+  
+  button {
+    display: block;
+    margin: 10px auto;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    padding: 5px;
+    border: 1px solid black;
+  }
+  
