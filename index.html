@@ -1,109 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>Аналитика YouTube канала</title>
-	<style>
-		table {
-			border-collapse: collapse;
-			margin: 20px;
-		}
-		th, td {
-			padding: 10px;
-			text-align: left;
-			border-bottom: 1px solid #ddd;
-		}
-	</style>
+  <meta charset="UTF-8">
+  <title>Статистика и аналитика YouTube канала</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-	<h1>Аналитика YouTube канала</h1>
-	<p>Введите ссылку на YouTube канал:</p>
-	<input type="text" id="channelLink">
-	<button onclick="getChannelData()">Получить данные</button>
-	<table id="channelData">
-		<tr>
-			<th>Показатель</th>
-			<th>30 дней</th>
-			<th>Ежемесячный доход ($)</th>
-			<th>Годовой доход ($)</th>
-		</tr>
-		<tr>
-			<td>Подписчики</td>
-			<td id="subscribers30"></td>
-			<td id="monthlyEarnings"></td>
-			<td id="yearlyEarnings"></td>
-		</tr>
-		<tr>
-			<td>Просмотры</td>
-			<td id="views30"></td>
-			<td></td>
-			<td></td>
-		</tr>
-	</table>
-	<script>
-        const apiKey = "AIzaSyCxtRiK3z_npiSb8OWkNEdgIqIbZbVQraA";
-
-		function getChannelData() {
-			const channelLink = document.getElementById("channelLink").value;
-			const channelId = getChannelId(channelLink);
-			const apiUrl = `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${encodeURIComponent(channelId)}&key=${apiKey}`;
-
-			fetch(apiUrl)
-				.then(response => {
-				if (!response.ok) {
-					throw new Error("Ошибка HTTP " + response.status);
-				}
-				return response.json();
-				})
-				.then(data => {
-				const subscribers = parseInt(data.items[0].statistics.subscriberCount);
-				const views = parseInt(data.items[0].statistics.viewCount);
-				const subscriberCountHistory = data.items[0].statistics.subscriberCountHistory;
-				const subscribers30 = calculateSubscribers30(subscribers, subscriberCountHistory);
-				const views30 = views - data.items[0].statistics.viewsLast30Days;
-				const monthlyEarnings = calculateMonthlyEarnings(subscribers);
-				const yearlyEarnings = monthlyEarnings * 12;
-
-				document.getElementById("subscriber-count").innerHTML = numberWithCommas(subscribers);
-				document.getElementById("subscribers30").innerHTML = numberWithCommas(subscribers30);
-				document.getElementById("views30").innerHTML = numberWithCommas(views30);
-				document.getElementById("monthlyEarnings").innerHTML = numberWithCommas(monthlyEarnings);
-				document.getElementById("yearlyEarnings").innerHTML = numberWithCommas(yearlyEarnings);
-				})
-				.catch(error => {
-				console.error("Ошибка получения данных канала: ", error);
-				});
-			}
-
-			function getChannelId(channelLink) {
-			const regex = /channel\/(.{24})/;
-			const result = regex.exec(channelLink);
-			if (result) {
-				return result[1];
-			} else {
-				return channelLink;
-			}
-			}
-
-			function calculateSubscribers30(totalSubscribers, subscriberCountHistory) {
-			const last30Days = subscriberCountHistory.slice(-30).map(x => parseInt(x));
-			const previous30Days = subscriberCountHistory.slice(-60, -30).map(x => parseInt(x));
-			const subscribers30DaysAgo = previous30Days[0];
-			const subscribersToday = totalSubscribers;
-			const subscribersGained = subscribersToday - subscribers30DaysAgo;
-			return subscribersGained;
-			}
-
-			function calculateMonthlyEarnings(subscribers) {
-			const cpm = 0.5; // Средний CPM на YouTube составляет около $0.5
-			const viewsPerMonth = subscribers * 30;
-			const earnings = viewsPerMonth * cpm / 1000;
-			return earnings.toFixed(2);
-			}
-
-			function numberWithCommas(x) {
-			return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-			}
-	</script>
+  <h1>Статистика и аналитика YouTube канала</h1>
+  
+  <div>
+    <label for="views-input">Просмотры канала за последний месяц:</label>
+    <input type="number" id="views-input">
+  </div>
+  
+  <div>
+    <label for="subs-input">Количество подписчиков за последний месяц:</label>
+    <input type="number" id="subs-input">
+  </div>
+  
+  <div>
+    <label for="topic-select">Тематика канала:</label>
+    <select id="topic-select">
+      <option value="1">Для детей</option>
+      <option value="2">Развлечения</option>
+      <option value="3">Бизнес, Финансы</option>
+      <option value="4">Автомобили, Технологии</option>
+    </select>
+  </div>
+  
+  <button onclick="calculateIncome()">Рассчитать доход</button>
+  
+  <table id="result-table">
+    <tr>
+      <th>Просмотры канала</th>
+      <th>Количество подписчиков</th>
+      <th>Тематика канала</th>
+      <th>Примерный доход</th>
+      <th>Новые подписчики (следующий месяц)</th>
+    </tr>
+  </table>
+  
+  <button onclick="downloadTable()">Скачать таблицу</button>
+  
+  <script src="main.js"></script>
 </body>
 </html>
