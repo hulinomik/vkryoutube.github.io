@@ -4,15 +4,72 @@ body {
   
   h1 {
     text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
   }
   
-  div {
+  .container-div {
     margin-bottom: 10px;
   }
   
+  .container-label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+  
+  .container-input,
+  .container-select {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .container-select {
+    cursor: pointer;
+  }
+  
+  .container-button {
+    display: block;
+    margin-bottom: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #60b468; /* Зеленый оттенок в логотипе ChatGPT */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .container-button:hover {
+    background-color: #449b54; /* Зеленый оттенок в логотипе ChatGPT при наведении */
+  }
+  
+  .container-button:active {
+    background-color: #338043; /* Зеленый оттенок в логотипе ChatGPT при нажатии */
+  }
+  
+  .container-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .container-table th,
+  .container-table td {
+    padding: 8px;
+    border: 1px solid #ccc;
+  }
+  
+  .container-table {
+    margin: 0 auto; /* Центрирование таблицы */
+  }
+  
+  
   label {
     display: inline-block;
-    width: 200px;
+    width: 250px;
   }
   
   input[type="number"] {
@@ -20,9 +77,33 @@ body {
   }
   
   select {
-    width: 150px;
+    width: 250px;
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    appearance: none;
+    background-color: white;
+    background-image: linear-gradient(to bottom, #f9f9f9, #e9e9e9);
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    cursor: pointer;
   }
   
+  select:focus {
+    outline: none;
+    border-color: #60b468;
+    box-shadow: 0 0 5px rgba(96, 180, 104, 0.5);
+  }
+  
+  select option {
+    padding: 8px;
+    font-size: 16px;
+    background-color: white;
+    color: #333;
+  }
+
   button {
     display: block;
     margin: 10px auto;
@@ -36,5 +117,47 @@ body {
   th, td {
     padding: 5px;
     border: 1px solid black;
+  }
+  
+  #result-table th {
+    background-color: #60b468; /* Зеленый оттенок в логотипе ChatGPT */
+    color: white;
+  }
+
+  button {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #006633; /* Зеленый оттенок в логотипе ChatGPT */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+
+  .receiving {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #DC143C; /* Зеленый оттенок в логотипе ChatGPT */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #449b54; /* Зеленый оттенок в логотипе ChatGPT при наведении */
+  }
+  
+  button:active {
+    background-color: #338043; /* Зеленый оттенок в логотипе ChatGPT при нажатии */
+  }
+  
+  .green-text {
+    color: green;
   }
   

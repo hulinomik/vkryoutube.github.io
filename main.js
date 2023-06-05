@@ -5,31 +5,42 @@ function calculateIncome() {
     
     var income = calculateIncomeFromViews(views, topic);
     var newSubs = calculateNewSubscribers(views, subs);
+    var viewsIncrement = calculateViewsIncrement(views); // Рассчитываем примерный прирост просмотров
     
     var table = document.getElementById("result-table");
     var row = table.insertRow(-1);
-    row.insertCell().innerHTML = views;
+    var viewsCell = row.insertCell();
+    viewsCell.innerHTML = "+" + viewsIncrement; // Добавляем знак "+" перед приростом просмотров
+    viewsCell.classList.add("green-text"); // Добавляем класс для зеленого цвета
     row.insertCell().innerHTML = subs;
-  row.insertCell().innerHTML = getTopicName(topic);
-  row.insertCell().innerHTML = income;
-  row.insertCell().innerHTML = newSubs;
+    row.insertCell().innerHTML = getTopicName(topic);
+    row.insertCell().innerHTML = "$" + income;
+    row.insertCell().innerHTML = newSubs;
   }
   
+  function calculateViewsIncrement(views) {
+    // Рассчитываем примерный прирост просмотров, например, на основе предыдущих данных
+    // Здесь вы можете добавить свою логику расчета
+    var increment = Math.floor(views * 0.1); // Например, 10% от просмотров
+    return increment;
+  }
+  
+
   function calculateIncomeFromViews(views, topic) {
     var income = 0;
     
     switch (topic) {
       case "1": // Для детей
-        income = views * 0.5; // Примерный доход для тематики "Для детей"
+        income = (views / 1000)* 0.5; // Примерный доход для тематики "Для детей"
         break;
       case "2": // Развлечения
-        income = views * 0.7; // Примерный доход для тематики "Развлечения"
+        income = (views / 1000)* 2; // Примерный доход для тематики "Развлечения"
         break;
       case "3": // Бизнес, Финансы
-        income = views * 1.2; // Примерный доход для тематики "Бизнес, Финансы"
+        income = (views / 1000)* 8; // Примерный доход для тематики "Бизнес, Финансы"
         break;
       case "4": // Автомобили, Технологии
-        income = views * 0.9; // Примерный доход для тематики "Автомобили, Технологии"
+        income = (views / 1000)* 4,5; // Примерный доход для тематики "Автомобили, Технологии"
         break;
       default:
         break;
@@ -81,5 +92,3 @@ function calculateIncome() {
     document.body.appendChild(link); // Required for Firefox
     link.click();
   }
-  
-  
