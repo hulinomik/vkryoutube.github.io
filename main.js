@@ -10,13 +10,37 @@ function calculateIncome() {
     var table = document.getElementById("result-table");
     var row = table.insertRow(-1);
     var viewsCell = row.insertCell();
+    viewsCell.innerHTML = views;
+    var viewsCell = row.insertCell();
     viewsCell.innerHTML = "+" + viewsIncrement; // Добавляем знак "+" перед приростом просмотров
     viewsCell.classList.add("green-text"); // Добавляем класс для зеленого цвета
     row.insertCell().innerHTML = subs;
-    row.insertCell().innerHTML = getTopicName(topic);
-    row.insertCell().innerHTML = "$" + income;
     row.insertCell().innerHTML = newSubs;
-  }
+    row.insertCell().innerHTML = "$" + income;
+    row.insertCell().innerHTML = getTopicName(topic);
+
+    // кнопка очистить данные в таблице
+
+    var table = document.getElementById("result-table");
+    var row = table.insertRow(-1);
+
+    var clearButtonCell = row.insertCell();
+    var clearButton = document.createElement("button");
+    clearButton.innerHTML = "Очистить";
+    clearButton.classList.add("clear-button");
+    clearButton.addEventListener("click", clearTable);
+    clearButtonCell.appendChild(clearButton);
+
+    // График и диаграмма
+  
+       
+    
+    // круговой график
+
+  
+
+    }
+  
   
   function calculateViewsIncrement(views) {
     // Рассчитываем примерный прирост просмотров, например, на основе предыдущих данных
@@ -69,6 +93,14 @@ function calculateIncome() {
     }
   }
   
+  function clearTable() {
+    var table = document.getElementById("result-table");
+    // Удаление всех строк из таблицы
+    while (table.rows.length > 1) {
+      table.deleteRow(1);
+    }
+  }  
+
   function downloadTable() {
     var table = document.getElementById("result-table");
     var csvContent = "data:text/csv;charset=utf-8,";
@@ -92,3 +124,9 @@ function calculateIncome() {
     document.body.appendChild(link); // Required for Firefox
     link.click();
   }
+
+// График и диаграмма
+
+
+  
+// круговой график

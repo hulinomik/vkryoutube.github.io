@@ -4,11 +4,16 @@
   <meta charset="UTF-8">
   <title>Статистика и аналитика YouTube канала</title>
   <link rel="stylesheet" type="text/css" href="styles.css">
+  
+
 </head>
 <body>
 	<div class="container">
-		<h1>Статистика и аналитика YouTube канала</h1>
-		
+		<div class="header1">
+			<!-- <img src="img/logo.png" alt="" width="75" height="65" style="display: block;"> -->
+		<h1>Статистика и аналитика YouTube канала </h1>
+		</div>
+		<br>
 		<div class="container-div">
 		  <label for="views-input" class="container-label">Просмотры канала за последний месяц:</label>
 		  <input type="number" id="views-input" class="container-input">
@@ -30,21 +35,57 @@
 		</div>
   
   <button onclick="calculateIncome()" class="receiving">Получить данные</button>
-  
+
+  <!-- таблица -->
+
   <table id="result-table">
     <tr>
+	  <th>Текущие просмотры</th>
       <th>Прирост просмотров</th>
-      <th>Количество подписчиков</th>
-      <th>Тематика канала</th>
+      <th>Текущие количество подписчиков</th>
+      <th>Прирост подписчиков</th>
       <th>Ориентировочный доход</th>
-      <th>Новые подписчики (следующий месяц)</th>
+      <th>Тематика канала</th>
     </tr>
   </table>
-  
+  <!-- <button class="clear-button">Очистить таблицу</button> -->
   <button onclick="downloadTable()">Скачать таблицу</button>
   <br></br>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- График и диаграмма -->
+
+  <div id="chart-container" style="width: 400px; height: 300px;">
+	<canvas id="views-chart"></canvas>
+  </div>
+  
+ <!-- <div class="chart-container" style="width: 400px; height: 400px;"> 
+	<canvas id="circular-chart"></canvas>
+</div> -->
+ 
+
+ <footer>
+    <div class="waves">
+        <div class="wave" id="wave1"></div>
+    </div>
+    <ul class="social">
+        <li><a href="#"><ion-icon name="logo-facebook"></ion-icon></a></li>
+        <li><a href="#"><ion-icon name="logo-twitter"></ion-icon></a></li>
+        <li><a href="#"><ion-icon name="logo-youtube"><ion-icon></a></li>
+        <li><a href="#"><ion-icon name="logo-instagram"></ion-icon></a></li>
+    </ul>
+    <ul class="menu">
+        <li><a href="#">Главная</a></li>
+        <li><a href="#">О Сервисе</a></li>
+        <li><a href="#">Функции</a></li>
+        <li><a href="#">Команда</a></li>
+        <li><a href="#">Контакты</a></li>
+    </ul>
+    <p>©2023 Онлайн сервис по аналитике, статистики и прогнозированию  | Все права защищены</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
   <script src="main.js"></script>
 </body>
 </html>
